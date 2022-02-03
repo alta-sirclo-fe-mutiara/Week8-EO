@@ -1,6 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import CardEvent from "../components/Card/CardEvent";
 import Layout from "../components/Layout/Layout";
+import { ButtonCategory } from "../components/UI/Button/ButtonCategory";
+import styles from "../styles/homepage.module.css";
 
 const Home: NextPage = () => {
   return (
@@ -18,37 +21,50 @@ const Home: NextPage = () => {
         </Head>
 
         <main>
-          <h1>
-            Welcome to <a href="https://nextjs.org">Next.js!</a>
-          </h1>
-
-          <p>
-            Get started by editing <code>pages/index.tsx</code>
-          </p>
-
-          <div>
-            <a href="https://nextjs.org/docs">
-              <h2>Documentation &rarr;</h2>
-              <p>Find in-depth information about Next.js features and API.</p>
-            </a>
-
-            <a href="https://nextjs.org/learn">
-              <h2>Learn &rarr;</h2>
-              <p>Learn about Next.js in an interactive course with quizzes!</p>
-            </a>
-
-            <a href="https://github.com/vercel/next.js/tree/canary/examples">
-              <h2>Examples &rarr;</h2>
-              <p>Discover and deploy boilerplate example Next.js projects.</p>
-            </a>
-
-            <a href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app">
-              <h2>Deploy &rarr;</h2>
-              <p>
-                Instantly deploy your Next.js site to a public URL with Vercel.
-              </p>
-            </a>
+          <div className="jumbotron row">
+            <div className="col-lg-6 mx-auto">
+              <h3 className={`${styles["text-jumbotron"]} text-center fw-bold`}>
+                Find your exciting events and activities at Lazy Events!
+              </h3>
+            </div>
+            <div className="container">
+              <div className="row height d-flex justify-content-center align-items-center">
+                <div className="col-lg-6  mt-3">
+                  <div className="search">
+                    {/* filter search */}
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Search..."
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="container mt-5">
+                <div className={`row mx-auto ${styles.category}`}>
+                  {/* Looping Category Button and logic get category */}
+                  <ButtonCategory>All</ButtonCategory>
+                  <ButtonCategory>Art</ButtonCategory>
+                  <ButtonCategory>Sport</ButtonCategory>
+                  <ButtonCategory>Tech</ButtonCategory>
+                  <ButtonCategory>Edu</ButtonCategory>
+                  <ButtonCategory>Music</ButtonCategory>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <section className="py-4 my-5">
+            <div className="container">
+              <div className="row">
+                {/* Looping Card item */}
+                <CardEvent />
+                <CardEvent />
+                <CardEvent />
+                <CardEvent />
+              </div>
+            </div>
+          </section>
         </main>
       </Layout>
     </div>
@@ -56,3 +72,5 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+// Get server side props to connect with backend and get all events
