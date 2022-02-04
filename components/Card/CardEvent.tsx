@@ -5,7 +5,7 @@ const CardEvent = () => {
   return (
     <div className="col-sm-6 col-md-4 col-lg-3">
       {/* get id to link and use params in detail events */}
-      <Link href="/events/1" passHref>
+      <Link href="/detail-event/1" passHref>
         <div className={`card my-3 shadow-sm ${styles.cards}`}>
           <div className="card-thumbnail p-2">
             <Image
