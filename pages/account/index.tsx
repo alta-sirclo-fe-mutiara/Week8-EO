@@ -1,6 +1,7 @@
 import Layout from "../../components/Layout/Layout";
 import { CardMyEvent } from "../../components/Card/CardEvent";
 import styles from "../../styles/account.module.css";
+import image from "../../styles/detail.module.css";
 import color from "../../styles/color.module.css";
 import { FaUserAlt } from "react-icons/fa";
 import { RiEdit2Fill, RiDeleteBin5Line } from "react-icons/ri";

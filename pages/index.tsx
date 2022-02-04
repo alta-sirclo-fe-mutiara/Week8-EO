@@ -4,6 +4,7 @@ import Layout from "../components/Layout/Layout";
 import { ButtonCategory } from "../components/UI/Button/ButtonCategory";
 import styles from "../styles/homepage.module.css";
 import color from "../styles/color.module.css";
+import { FiSearch } from "react-icons/fi";
 
 const Home: NextPage = () => {
 	return (
@@ -26,7 +27,20 @@ const Home: NextPage = () => {
 								<div className="col-lg-6  mt-3">
 									<div className="search">
 										{/* filter search */}
-										<input type="text" className="form-control" placeholder="Search..." />
+										<div className="input-group mb-3">
+											<input
+												type="text"
+												className="form-control"
+												placeholder="Search..."
+											/>
+											<button
+												className="btn btn-outline-secondary"
+												type="button"
+												id="button-addon2"
+											>
+												<FiSearch />
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
