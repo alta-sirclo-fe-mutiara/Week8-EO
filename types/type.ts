@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
 export type ChildProps = {
-  children: ReactNode;
+	pageTitle?: String;
+	children: ReactNode;
 };
