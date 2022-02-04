@@ -1,12 +1,15 @@
-import Image from "next/image";
 import Layout from "../../components/Layout/Layout";
 import { CardMyEvent } from "../../components/Card/CardEvent";
 import styles from "../../styles/account.module.css";
 import color from "../../styles/color.module.css";
 import { FaUserAlt } from "react-icons/fa";
-import { RiEdit2Fill, RiDeleteBin5Line, RiCalendarLine } from "react-icons/ri";
+import { RiEdit2Fill, RiDeleteBin5Line } from "react-icons/ri";
 
-export default function Account() {
+type Props = {
+	onClick: any;
+};
+
+const Account: React.FC<Props> = ({ onClick }) => {
 	return (
 		<>
 			<Layout pageTitle="Profile">
@@ -39,7 +42,11 @@ export default function Account() {
 							</div>
 							<div className="col-lg-3">
 								<div className="profile-action d-flex justify-content-center">
-									<div className="col-2 text-center text-lg-start">
+									<div
+										className="col-2 text-center text-lg-start"
+										style={{ cursor: "pointer" }}
+										onClick={onClick}
+									>
 										<RiEdit2Fill />
 									</div>
 									<div className="col-2 text-center text-lg-end">
@@ -67,4 +74,6 @@ export default function Account() {
 			</Layout>
 		</>
 	);
-}
+};
+
+export default Account;
