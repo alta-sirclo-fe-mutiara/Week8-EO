@@ -1,0 +1,21 @@
+.text-jumbotron {
+  color: #533529;
+}
+
+.text {
+  color: #ff7158;
+}
+
+.category {
+  width: 70%;
+}
+
+.cards {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .category {
+    width: 100%;
+  }
+}
