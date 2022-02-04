@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
-import CardEvent from "../components/Card/CardEvent";
+import { CardEvent } from "../components/Card/CardEvent";
 import Layout from "../components/Layout/Layout";
 import { ButtonCategory } from "../components/UI/Button/ButtonCategory";
 import styles from "../styles/homepage.module.css";
+import color from "../styles/color.module.css";
 
 const Home: NextPage = () => {
 	return (
@@ -16,7 +17,7 @@ const Home: NextPage = () => {
 				<main>
 					<div className="jumbotron row">
 						<div className="col-lg-6 mx-auto">
-							<h3 className={`${styles["text-jumbotron"]} text-center fw-bold`}>
+							<h3 className={`${color["text-jumbotron"]} text-center fw-bold`}>
 								Find your exciting events and activities at Lazy Events!
 							</h3>
 						</div>
