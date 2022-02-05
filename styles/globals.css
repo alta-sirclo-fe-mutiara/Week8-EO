@@ -43,3 +43,7 @@ p {
 	background: #29a867 !important;
 	border-radius: 6px;
 }
+
+.not-found {
+	height: 100vh;
+}
