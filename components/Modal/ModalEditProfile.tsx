@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
@@ -9,21 +9,31 @@ type Props = {
 };
 
 type Inputs = {
+	name: string;
 	email: string;
-	password: string;
+	phone: string;
+	address: string;
+	password?: string;
+	id?: number;
 };
 
-const ModalLogin: React.FC<Props> = ({ showLog, onSetLog, onSetReg }) => {
+const ModalEditProfile: React.FC<Props> = ({ showLog, onSetLog }) => {
 	const [isSucces, setIsSucces] = useState<boolean>(false);
 	const [isFailed, setIsFailed] = useState<boolean>(false);
+	const [data, setData] = useState({});
 	const {
-		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<Inputs>();
 
-	const onSubmit = (data: any) => {
-		console.log(data);
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [phone, setPhone] = useState("");
+
+	const onSubmit = async (e: any) => {
+		e.preventDefault();
+		console.log(e);
 		// Send data to back end with graphql
 		setIsSucces(true);
 		setTimeout(() => {
@@ -31,6 +41,7 @@ const ModalLogin: React.FC<Props> = ({ showLog, onSetLog, onSetReg }) => {
 			setIsFailed(true);
 		}, 1000);
 	};
+
 	return (
 		<Modal
 			show={showLog}
@@ -41,7 +52,7 @@ const ModalLogin: React.FC<Props> = ({ showLog, onSetLog, onSetReg }) => {
 		>
 			<Modal.Header className="border-0 text-center" closeButton>
 				<Modal.Title className="w-100 dark-grey-text font-weight-bold">
-					Login
+					Edit Profile
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body className="py-3 mx-2">
@@ -49,13 +60,22 @@ const ModalLogin: React.FC<Props> = ({ showLog, onSetLog, onSetReg }) => {
 					{isSucces && <div className="btn btn-success w-100">Succes</div>}
 					{isFailed && <div className="btn btn-danger w-100">Failed</div>}
 					<Form.Group className="mb-3">
-						<Form.Label>Email address</Form.Label>
+						<Form.Label>Name</Form.Label>
+						<Form.Control
+							type="text"
+							onChange={(e: any) => setName(e.target.value)}
+							value={name}
+						/>
+						{errors.name && (
+							<span className="text-danger">This field is required</span>
+						)}
+					</Form.Group>
+					<Form.Group className="mb-3" controlId="formBasicPassword">
+						<Form.Label>Email</Form.Label>
 						<Form.Control
 							type="email"
-							placeholder="Enter email"
-							{...register("email", {
-								required: true,
-							})}
+							onChange={(e: any) => setEmail(e.target.value)}
+							value={email}
 						/>
 						{errors.email && (
 							<span className="text-danger">This field is required</span>
@@ -65,34 +85,28 @@ const ModalLogin: React.FC<Props> = ({ showLog, onSetLog, onSetReg }) => {
 						<Form.Label>Password</Form.Label>
 						<Form.Control
 							type="password"
-							placeholder="Enter password"
-							{...register("password", {
-								required: true,
-							})}
+							onChange={(e: any) => setPassword(e.target.value)}
+							value={password}
 						/>
 						{errors.password && (
 							<span className="text-danger">This field is required</span>
 						)}
 					</Form.Group>
+					<Form.Group className="mb-3" controlId="formBasicPassword">
+						<Form.Label>Phone</Form.Label>
+						<Form.Control
+							type="text"
+							onChange={(e: any) => setPhone(e.target.value)}
+							value={phone}
+						/>
+						{errors.phone && (
+							<span className="text-danger">This field is required</span>
+						)}
+					</Form.Group>
 					<div className="py-2 d-flex flex-column justify-content-center gap-4 mt-4">
 						<Button type="submit" variant="primary" className="">
-							Login
+							Update Profile
 						</Button>
-						<p className="text-center">
-							Not yet account?
-							<span
-								style={{
-									cursor: "pointer",
-								}}
-								className="px-2 text-primary"
-								onClick={() => {
-									onSetLog(false);
-									onSetReg(true);
-								}}
-							>
-								Sign Up
-							</span>
-						</p>
 					</div>
 				</Form>
 			</Modal.Body>
@@ -100,4 +114,4 @@ const ModalLogin: React.FC<Props> = ({ showLog, onSetLog, onSetReg }) => {
 	);
 };
 
-export default ModalLogin;
+export default ModalEditProfile;

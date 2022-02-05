@@ -1,42 +1,39 @@
-.text {
-  color: #ff7158;
-}
-
 .palagraf {
-  text-align: justify;
+	text-align: justify;
 }
 
 .span {
-  box-sizing: border-box;
-  display: block;
-  width: initial;
-  height: initial;
-  background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
-  opacity: 1;
-  border: 0px none;
-  margin: 0px;
-  padding: 0px;
-  max-width: 100%;
+	box-sizing: border-box;
+	display: block;
+	width: initial;
+	height: initial;
+	background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+	opacity: 1;
+	border: 0px none;
+	margin: 0px;
+	padding: 0px;
+	max-width: 100%;
 }
 .img,
 .img-attend {
-  display: block;
-  height: 70px;
-  width: 70px;
-  margin: 0 5px;
-  border-radius: 50%;
-  background-position: center;
-  background-size: cover;
-  border: 3px solid transparent;
+	display: block;
+	height: 70px;
+	width: 70px;
+	margin: 0 5px;
+	border-radius: 50%;
+	background-position: center;
+	background-size: cover;
+	border: 3px solid transparent;
 }
+
 .img-attend {
-  height: 50px;
-  width: 50px;
+	height: 50px;
+	width: 50px;
 }
 
 @media only screen and (max-width: 600px) {
-  .img {
-    height: 60px;
-    width: 60px;
-  }
+	.img {
+		height: 60px;
+		width: 60px;
+	}
 }
