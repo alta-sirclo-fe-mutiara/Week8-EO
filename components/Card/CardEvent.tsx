@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/homepage.module.css";
 import { RiEdit2Fill, RiDeleteBin5Line, RiCalendarLine } from "react-icons/ri";

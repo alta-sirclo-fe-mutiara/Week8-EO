@@ -1,8 +1,6 @@
 import Layout from "../../components/Layout/Layout";
 import { CardMyEvent } from "../../components/Card/CardEvent";
 import styles from "../../styles/account.module.css";
-import image from "../../styles/detail.module.css";
-import color from "../../styles/color.module.css";
 import { FaUserAlt } from "react-icons/fa";
 import { RiEdit2Fill, RiDeleteBin5Line } from "react-icons/ri";
 
@@ -60,9 +58,7 @@ const Account: React.FC<Props> = ({ onClick }) => {
 				</div>
 				<div className="container">
 					<div className="row">
-						<h3 className={`${color["text-jumbotron"]} mb-0 mt-4 fw-bold`}>
-							My Event List
-						</h3>
+						<h3 className="text-jumbotron mb-0 mt-4 fw-bold">My Event List</h3>
 						<div className="list-event mt-4">
 							<div className="row item-list">
 								<CardMyEvent />

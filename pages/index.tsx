@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 				<main>
 					<div className="jumbotron row">
 						<div className="col-lg-6 mx-auto">
-							<h3 className={`${color["text-jumbotron"]} text-center fw-bold`}>
+							<h3 className="text-jumbotron text-center fw-bold">
 								Find your exciting events and activities at Lazy Events!
 							</h3>
 						</div>
