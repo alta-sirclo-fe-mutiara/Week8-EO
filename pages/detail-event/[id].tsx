@@ -17,8 +17,8 @@ const DetailEvent: NextPage = () => {
 				</div>
 				<div className="col-xs-12 col-md-4 d-flex flex-column gap-4">
 					<div>
-						<h3 className={styles.text}>13</h3>
-						<h3 className={styles.text}>Feb</h3>
+						<h3 className="text">13</h3>
+						<h3 className="text">Feb</h3>
 						<h3 className="text-black">International Education Expo 2022</h3>
 						<h6 className="text-secondary">Hosted by lazy events</h6>
 					</div>
@@ -33,7 +33,7 @@ const DetailEvent: NextPage = () => {
 								/>
 							</div>
 						</div>
-						<button className="btn btn-primary w-100">Join</button>
+						<button className="btn btn-green text-white w-100">Join</button>
 					</div>
 				</div>
 				<div className="jumbotron">
@@ -63,12 +63,14 @@ const DetailEvent: NextPage = () => {
 				</div>
 			</div>
 			<div className="d-flex flex-column gap-4">
-				<h3>Comments</h3>
-				<CommentBar />
-				<CommentList />
-				<CommentList />
-				<CommentList />
-				<CommentList />
+				<div className="col-10 col-lg-8">
+					<h3>Comments</h3>
+					<CommentBar />
+					<CommentList />
+					<CommentList />
+					<CommentList />
+					<CommentList />
+				</div>
 			</div>
 		</Layout>
 	);

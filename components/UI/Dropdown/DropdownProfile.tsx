@@ -14,7 +14,7 @@ const DropdownProfile = () => {
         />
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Link href="/profile" passHref>
+        <Link href="/account" passHref>
           <Dropdown.Item>
             <CgProfile
               style={{

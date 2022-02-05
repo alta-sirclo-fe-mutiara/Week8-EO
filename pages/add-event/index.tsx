@@ -44,7 +44,7 @@ const AddEvent = () => {
     }, 1000);
   };
   return (
-    <Layout>
+    <Layout pageTitle="Add Event">
       <ModalAlert
         handleClose={handleClose}
         show={show.success}

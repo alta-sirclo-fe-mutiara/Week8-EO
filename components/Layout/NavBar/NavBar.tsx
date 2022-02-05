@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Link from "next/link";
 import DropdownProfile from "../../UI/Dropdown/DropdownProfile";
+
 type Props = {
   onClick: any;
 };
@@ -10,7 +11,7 @@ const colorNav = {
 };
 
 const NavBar: React.FC<Props> = ({ onClick }) => {
-  let isLogged = false;
+  let isLogged = true;
   const [navbar, setNavbar] = useState<string>("border-bottom");
 
   useEffect(() => {
@@ -50,28 +51,27 @@ const NavBar: React.FC<Props> = ({ onClick }) => {
           className="justify-content-end align-items-center"
           style={colorNav}
         >
-          <Nav.Link
-            style={{
-              color: "#FF7158",
-            }}
-          >
+          <Nav.Link style={colorNav} href="/">
             Events
           </Nav.Link>
           {isLogged && (
-            <Nav.Link style={colorNav} href="add-event">
-              Add Events
-            </Nav.Link>
+            <>
+              <Nav.Link style={colorNav} href="add-event">
+                Add Events
+              </Nav.Link>
+              <div className="text-secondary">
+                <DropdownProfile />
+              </div>
+            </>
           )}
 
           {!isLogged && (
-            <Nav.Link className="btn bg-success text-white" onClick={onClick}>
+            <Nav.Link
+              className="login px-4 btn bg-success text-white"
+              onClick={onClick}
+            >
               Login
             </Nav.Link>
-          )}
-          {isLogged && (
-            <div className="text-secondary">
-              <DropdownProfile />
-            </div>
           )}
         </Navbar.Collapse>
       </Container>

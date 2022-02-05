@@ -6,8 +6,14 @@ import styles from "../../styles/color.module.css";
 import Layout from "../../components/Layout/Layout";
 import FormInput from "../../components/Form/FormInput";
 import ModalAlert from "../../components/Modal/ModalAlert";
+import { useRouter } from "next/router";
 
 const EditEvent = () => {
+  const { query } = useRouter();
+
+  if (query.edit) {
+    console.log("hi");
+  }
   const {
     register,
     handleSubmit,
@@ -57,7 +63,7 @@ const EditEvent = () => {
   };
 
   return (
-    <Layout>
+    <Layout pageTitle="Edit Event">
       <ModalAlert
         handleClose={handleClose}
         show={show.success}
