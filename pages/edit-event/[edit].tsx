@@ -44,6 +44,7 @@ const EditEvent = () => {
   };
 
   const onSubmit: SubmitHandler<InputEvents> = async (data) => {
+
     const date = moment(data.datetime).format("YYYY-MM-DD h:mm:ss");
     console.log({
       ...data,

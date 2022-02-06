@@ -11,10 +11,10 @@ const colorNav = {
 };
 
 const NavBar: React.FC<Props> = ({ onClick }) => {
+
   const { state } = useContext(AuthContext);
   const { isLogged } = state;
   const [navbar, setNavbar] = useState<string>("border-bottom");
-
   useEffect(() => {
     const addShadowNavbar = () => {
       const onScrollNavbar = window.scrollY;
@@ -27,7 +27,7 @@ const NavBar: React.FC<Props> = ({ onClick }) => {
       window.removeEventListener("scroll", addShadowNavbar);
     };
   });
-
+  
   return (
     <Navbar
       className={`${navbar} sticky-top py-3 bg-white`}
