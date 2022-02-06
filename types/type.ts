@@ -8,7 +8,7 @@ export type ChildProps = {
 export type InputEvents = {
   name: string;
   promotor: string;
-  category_id: number;
+  categoryId: number;
   datetime: string;
   location: string;
   photo: string;

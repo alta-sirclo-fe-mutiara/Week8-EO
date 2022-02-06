@@ -8,43 +8,42 @@ import {
   QUERY_GET_BY_ID,
   QUERY_GET_PARTICIPANTS,
   MUTATION_JOIN_EVENT,
+  QUERY_GET_COMMENTS,
 } from "../../utils/queries";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Attend from "../../components/UI/Attend/Attend";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import { breakDate, tokenLocal } from "../../utils/formatDate";
-import jwtDecode from "jwt-decode";
-import { TokenProps } from "../../types/type";
 
-const DetailEvent: NextPage = ({ event }: any) => {
+const DetailEvent: NextPage = ({ event, comments }: any) => {
   const { state } = useContext(AuthContext);
   const { token, isLogged } = state;
   const { id, name, datetime, description, location, photo, promotor } = event;
   const { dateEvents, ddEvents, mmEvents, timeEvent } = breakDate(datetime);
   const [dataParticipans, setDataParticipans] = useState([]);
-  // const { tokenId } = tokenLocal("users");
+  const [isComment, setIsComment] = useState([]);
+  const tokenId = tokenLocal("users");
   const [joinEvent] = useMutation(MUTATION_JOIN_EVENT);
   const [getJoinEvent, { loading, data: newJoin, refetch }] = useLazyQuery(
     QUERY_GET_PARTICIPANTS
   );
 
-  // console.log(tokenId);
   const isJoin =
-    dataParticipans.filter((user: any) => user.id === 1 || 0).length >= 1
+    dataParticipans.filter((user: any) => user.id === tokenId || 0).length >= 1
       ? true
       : false;
 
   useEffect(() => {
+    setIsComment(comments);
     getJoinEvent({
       variables: { id },
     }).then((data) => {
       setDataParticipans(data.data.participants);
     });
-  }, [getJoinEvent, id, setDataParticipans, newJoin, loading]);
+  }, [getJoinEvent, id, newJoin, loading, comments]);
 
   const peopleAttend = dataParticipans.length;
-  console.log(isJoin);
 
   const handleJoinEvent = () => {
     if (token) {
@@ -123,12 +122,18 @@ const DetailEvent: NextPage = ({ event }: any) => {
       </div>
       <div className="d-flex flex-column gap-4">
         <div className="col-10 col-lg-8">
-          <h3>Comments</h3>
-          <CommentBar />
-          <CommentList />
-          <CommentList />
-          <CommentList />
-          <CommentList />
+          <h3 className="mb-4">Comments</h3>
+          {isLogged && (
+            <CommentBar
+              token={token}
+              eventId={id}
+              isComment={isComment}
+              setIsComment={setIsComment}
+            />
+          )}
+          {isComment.map((comments: any, i: number) => (
+            <CommentList key={i} comment={comments} />
+          ))}
         </div>
       </div>
     </Layout>
@@ -143,9 +148,15 @@ export const getServerSideProps = async ({ params }: any) => {
     variables: { id: params.id },
   });
 
+  const { data: dataComment } = await client.query({
+    query: QUERY_GET_COMMENTS,
+    variables: { eventId: params.id },
+  });
+
   return {
     props: {
       event: data.eventsByID,
+      comments: dataComment.readComment,
     },
   };
 };

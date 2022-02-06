@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import moment from "moment";
 import { InputEvents } from "../../types/type";
@@ -6,14 +6,27 @@ import styles from "../../styles/color.module.css";
 import Layout from "../../components/Layout/Layout";
 import FormInput from "../../components/Form/FormInput";
 import ModalAlert from "../../components/Modal/ModalAlert";
-import { useRouter } from "next/router";
+import { MUTATION_UPDATE_EVENT, QUERY_GET_BY_ID } from "../../utils/queries";
+import client from "../../utils/apollo-client";
+import { useMutation } from "@apollo/client";
+import { AuthContext } from "../../context/AuthContext";
+import NotFound from "../../components/Layout/NotFound";
 
-const EditEvent = () => {
-  const { query } = useRouter();
-
-  if (query.edit) {
-    console.log("hi");
-  }
+const EditEvent = ({ eventEdit }: any) => {
+  const [updateEvent] = useMutation(MUTATION_UPDATE_EVENT);
+  const { state } = useContext(AuthContext);
+  const { token, isLogged } = state;
+  console.log(isLogged);
+  const {
+    id,
+    name,
+    promotor,
+    datetime,
+    categoryName,
+    location,
+    photo,
+    description,
+  } = eventEdit;
   const {
     register,
     handleSubmit,
@@ -22,13 +35,13 @@ const EditEvent = () => {
   } = useForm<InputEvents>();
 
   const defaultValues: InputEvents = {
-    name: "lazy events",
-    promotor: "lazy events",
-    category_id: 1,
-    datetime: "2022-02-25 12:00:00",
-    location: "Jakarta",
-    photo: "google.com",
-    description: "ini details",
+    name,
+    promotor,
+    datetime,
+    location,
+    photo,
+    description,
+    categoryId: categoryName,
   };
 
   const [isSucces, setIsSucces] = useState<boolean>(false);
@@ -43,24 +56,44 @@ const EditEvent = () => {
     });
   };
 
-  const onSubmit: SubmitHandler<InputEvents> = async (data) => {
+  const onSubmit: SubmitHandler<InputEvents> = (data) => {
     const date = moment(data.datetime).format("YYYY-MM-DD h:mm:ss");
-    console.log({
-      ...data,
-      id: 1,
-      date,
-      category_id: +data.category_id,
-    });
-    // Sent to backend
-    // Logic modal succes && error
-    setIsSucces(false);
-    setTimeout(() => {
-      setShow({
-        ...show,
-        failed: true,
+
+    updateEvent({
+      variables: {
+        id: id,
+        name: data.name,
+        promotor: data.promotor,
+        categoryId: +data.categoryId,
+        datetime: date,
+        location: data.location,
+        description: data.description,
+        photo: data.photo,
+      },
+      context: {
+        headers: {
+          Authorization: `Bearer ` + token,
+        },
+      },
+    })
+      .then(() => {
+        setIsSucces(true);
+        setShow({
+          ...show,
+          success: true,
+        });
+      })
+      .catch(() => {
+        setIsSucces(false);
+        setShow({
+          ...show,
+          failed: true,
+        });
       });
-    }, 1000);
   };
+  if (!isLogged) {
+    return <NotFound />;
+  }
 
   return (
     <Layout pageTitle="Edit Event">
@@ -99,4 +132,15 @@ const EditEvent = () => {
 
 export default EditEvent;
 
-// Get static props or get server side
+export const getServerSideProps = async ({ params }: any) => {
+  const { data } = await client.query({
+    query: QUERY_GET_BY_ID,
+    variables: { id: params.edit },
+  });
+
+  return {
+    props: {
+      eventEdit: data.eventsByID,
+    },
+  };
+};

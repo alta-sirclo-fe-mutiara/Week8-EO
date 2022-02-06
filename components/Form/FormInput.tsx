@@ -5,6 +5,8 @@ import { Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import InputForm from "../UI/Input/InputForm";
 import styles from "../../styles/color.module.css";
+import { QUERY_GET_CATEGORY } from "../../utils/queries";
+import { useQuery } from "@apollo/client";
 
 interface FormInputs {
   addType: boolean;
@@ -24,31 +26,31 @@ const FormInput: React.FC<FormInputs> = ({
   control,
   errors,
 }) => {
+  const [isCategories, setIsCategories] = useState([]);
+  const { data } = useQuery(QUERY_GET_CATEGORY);
+
   const [values, setValues] = useState<InputEvents>({
     name: "",
     promotor: "",
-    category_id: 0,
+    categoryId: 0,
     datetime: "",
     location: "",
     photo: "",
     description: "",
   });
-  const {
-    name,
-    promotor,
-    category_id,
-    datetime,
-    location,
-    photo,
-    description,
-  } = values;
+  const { name, promotor, categoryId, datetime, location, photo, description } =
+    values;
 
   useEffect(() => {
+    if (data) {
+      setIsCategories(data.categories);
+    }
+
     if (defaultValues) {
       const {
         name,
         promotor,
-        category_id,
+        categoryId,
         datetime,
         location,
         photo,
@@ -57,7 +59,7 @@ const FormInput: React.FC<FormInputs> = ({
       setValues({
         name,
         promotor,
-        category_id,
+        categoryId,
         datetime,
         location,
         photo,
@@ -65,10 +67,11 @@ const FormInput: React.FC<FormInputs> = ({
       });
     }
   }, [
+    data,
     setValues,
     name,
     promotor,
-    category_id,
+    categoryId,
     datetime,
     location,
     photo,
@@ -107,15 +110,17 @@ const FormInput: React.FC<FormInputs> = ({
               style={{
                 backgroundColor: "#F3F3F3",
               }}
-              defaultValue={addType ? "" : category_id}
-              errors={errors.category_id}
-              {...register("category_id", {
+              defaultValue={addType ? "" : categoryId}
+              errors={errors.categoryId}
+              {...register("categoryId", {
                 required: true,
               })}
             >
-              <option value={1}>One</option>
-              <option value={2}>Two</option>
-              <option value={3}>Three</option>
+              {isCategories.map((categories: any, i: number) => (
+                <option key={i} value={categories.id}>
+                  {categories.category}
+                </option>
+              ))}
             </Form.Select>
           </Form.Group>
         </div>

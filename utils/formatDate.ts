@@ -29,12 +29,16 @@ const formatDate = (key: string) => {
 };
 
 const tokenLocal = (key: string) => {
-  const local = localStorage.getItem(key) || "{}";
-  const isToken = JSON.parse(local);
+  const isServer = typeof window === "undefined";
   let tokenId;
-  if (isToken.token) {
-    const decode: Token = jwtDecode(isToken.token);
-    tokenId = decode.id;
+  if (!isServer) {
+    const local = localStorage.getItem(key) || "{}";
+    const isToken = JSON.parse(local);
+
+    if (isToken.token) {
+      const decode: Token = jwtDecode(isToken.token);
+      tokenId = decode.id;
+    }
   }
 
   return tokenId;
