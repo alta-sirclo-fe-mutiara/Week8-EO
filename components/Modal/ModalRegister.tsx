@@ -1,6 +1,8 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { MUTATION_REGISTER } from "../../utils/queries";
 
 type Props = {
   showReg: boolean;
@@ -17,20 +19,28 @@ type Inputs = {
 const ModalRegister: React.FC<Props> = ({ showReg, onSetLog, onSetReg }) => {
   const [isSucces, setIsSucces] = useState<boolean>(false);
   const [isFailed, setIsFailed] = useState<boolean>(false);
+  const [addUser, { data: a }] = useMutation(MUTATION_REGISTER);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    // Send data to back end with graphql
-    setIsSucces(true);
-    setTimeout(() => {
-      setIsSucces(false);
-      setIsFailed(true);
-    }, 1000);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    addUser({
+      variables: {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      },
+    }).then(() => {
+      console.log(a);
+      setIsSucces(true);
+      setTimeout(() => {
+        setIsSucces(false);
+        onSetReg(false);
+      }, 1000);
+    });
   };
   return (
     <Modal

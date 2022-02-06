@@ -2,7 +2,18 @@ import { Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 const DropdownProfile = () => {
+  const { dispatch } = useContext(AuthContext);
+  const router = useRouter();
+  const logoutHandler = () => {
+    dispatch({ type: "LOGOUT_SUCCESS" });
+    localStorage.removeItem("users");
+    router.push("/");
+    router.replace("/");
+  };
   return (
     <Dropdown>
       <Dropdown.Toggle variant="none" id="dropdown-basic">
@@ -35,7 +46,7 @@ const DropdownProfile = () => {
               marginRight: "0.2rem",
             }}
           />
-          Logout
+          <span onClick={logoutHandler}>Logout</span>
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

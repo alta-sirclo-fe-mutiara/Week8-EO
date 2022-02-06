@@ -1,11 +1,21 @@
 import type { NextPage } from "next";
+import { useEffect, useState } from "react";
 import CardEvent from "../components/Card/CardEvent";
 import Layout from "../components/Layout/Layout";
 import { ButtonCategory } from "../components/UI/Button/ButtonCategory";
 import styles from "../styles/homepage.module.css";
-import { FiSearch } from "react-icons/fi";
+import client from "../utils/apollo-client";
+import { QUERY_ALL_EVENTS } from "../utils/queries";
+import { EventData } from "../types/type";
+import SearchFilter from "../components/Search/SearchFilter";
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ events }: any) => {
+  const [eventData, setEventData] = useState([]);
+
+  useEffect(() => {
+    setEventData(events);
+  }, [setEventData, events]);
+
   return (
     <div
       style={{
@@ -25,21 +35,7 @@ const Home: NextPage = () => {
               <div className="row height d-flex justify-content-center align-items-center">
                 <div className="col-lg-6  mt-3">
                   <div className="search">
-                    {/* filter search */}
-                    <div className="input-group mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search..."
-                      />
-                      <button
-                        className="btn btn-outline-secondary"
-                        type="button"
-                        id="button-addon2"
-                      >
-                        <FiSearch />
-                      </button>
-                    </div>
+                    <SearchFilter setEventData={setEventData} />
                   </div>
                 </div>
               </div>
@@ -60,11 +56,17 @@ const Home: NextPage = () => {
           <section className="py-4 my-5">
             <div className="container">
               <div className="row">
-                {/* Looping Card item */}
-                <CardEvent />
-                <CardEvent />
-                <CardEvent />
-                <CardEvent />
+                {eventData.map((event: EventData, i: number) => (
+                  <CardEvent
+                    key={i}
+                    id={event.id}
+                    name={event.name}
+                    photo={event.photo}
+                    datetime={event.datetime}
+                    promotor={event.promotor}
+                    category_id={event.category_id}
+                  />
+                ))}
               </div>
             </div>
           </section>
@@ -76,4 +78,14 @@ const Home: NextPage = () => {
 
 export default Home;
 
-// Get server side props to connect with backend and get all events
+export const getServerSideProps = async () => {
+  const { data } = await client.query({
+    query: QUERY_ALL_EVENTS,
+  });
+
+  return {
+    props: {
+      events: data.events,
+    },
+  };
+};

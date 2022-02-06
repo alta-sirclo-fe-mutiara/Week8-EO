@@ -1,16 +1,31 @@
 import { ReactNode } from "react";
 
 export type ChildProps = {
-	pageTitle?: String;
-	children: ReactNode;
+  pageTitle?: String;
+  children: ReactNode;
 };
 
 export type InputEvents = {
   name: string;
   promotor: string;
   category_id: number;
-  date: string;
+  datetime: string;
   location: string;
   photo: string;
-  details: string;
+  description: string;
+};
+
+export type EventData = {
+  id: number;
+  name: string;
+  promotor: string;
+  category_id: number;
+  datetime: string;
+  photo: string;
+};
+
+export type TokenProps = {
+  authorized: boolean;
+  exp: number;
+  id: number;
 };

@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { ApolloProvider } from "@apollo/client";
 import client from "../utils/apollo-client";
+import { AuthContextProvide } from "../context/AuthContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -13,9 +14,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       : null;
   }, []);
   return (
-    <ApolloProvider client={client}>
-      <Component {...pageProps} />
-    </ApolloProvider>
+    <AuthContextProvide>
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </AuthContextProvide>
   );
 }
 

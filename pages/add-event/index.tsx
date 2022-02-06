@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import moment from "moment";
+import { useMutation } from "@apollo/client";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputEvents } from "../../types/type";
 import styles from "../../styles/color.module.css";
 import Layout from "../../components/Layout/Layout";
 import FormInput from "../../components/Form/FormInput";
 import ModalAlert from "../../components/Modal/ModalAlert";
-
+import { MUTATION_CREATE_EVENT } from "../../utils/queries";
+import { AuthContext } from "../../context/AuthContext";
 const AddEvent = () => {
+  const { state } = useContext(AuthContext);
+  const { token, isLogged } = state;
+  console.log(token);
+  const [createEvent, { error }] = useMutation(MUTATION_CREATE_EVENT);
   const {
     register,
     handleSubmit,
@@ -17,43 +23,79 @@ const AddEvent = () => {
   const [show, setShow] = useState({
     success: false,
     failed: false,
+    isSucces: false,
   });
-  const [isSucces, setIsSucces] = useState<boolean>(false);
+
   const handleClose = () => {
-    setShow({
-      success: false,
-      failed: false,
-    });
+    setShow({ ...show, success: false, failed: false });
   };
 
   const onSubmit: SubmitHandler<InputEvents> = async (data) => {
-    const date = moment(data.date).format("YYYY-MM-DD h:mm:ss");
-    console.log({
-      ...data,
-      id: 1,
-      date,
-      category_id: +data.category_id,
-    });
-    // Sent to backend
-    setIsSucces(false);
-    setTimeout(() => {
-      setShow({
-        ...show,
-        failed: true,
+    const {
+      name,
+      promotor,
+      category_id,
+      datetime,
+      location,
+      description,
+      photo,
+    } = data;
+
+    const date = moment(datetime).format("YYYY-MM-DD h:mm:ss");
+    let addEvent = {
+      name: name,
+      userId: 12,
+      promotor: promotor,
+      categoryId: +category_id,
+      datetime: date,
+      location: location,
+      description: description,
+      photo: photo,
+    };
+
+    if (token) {
+      createEvent({
+        variables: addEvent,
+        context: {
+          headers: {
+            Authorization: `Bearer ` + token,
+          },
+        },
+      }).then((data) => {
+        if (data.data) {
+          setShow({
+            success: true,
+            failed: false,
+            isSucces: true,
+          });
+        }
+
+        if (error) {
+          setShow({
+            success: false,
+            failed: true,
+            isSucces: false,
+          });
+        }
       });
-    }, 1000);
+    }
   };
+
+  if (!isLogged) {
+    return <p>Page not found!</p>;
+  }
+
   return (
     <Layout pageTitle="Add Event">
       <ModalAlert
         handleClose={handleClose}
         show={show.success}
-        isSucces={isSucces}
+        isSucces={show.isSucces}
       />
       <ModalAlert
         handleClose={handleClose}
         show={show.failed}
-        isSucces={isSucces}
+        isSucces={show.isSucces}
       />
       <div className="jumbotron">
         <div className={styles.jumbotron}>

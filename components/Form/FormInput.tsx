@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { InputEvents } from "../../types/type";
 import { Controller } from "react-hook-form";
-import moment from "moment";
 import DatePicker from "react-datepicker";
 import InputForm from "../UI/Input/InputForm";
 import styles from "../../styles/color.module.css";
@@ -29,26 +28,40 @@ const FormInput: React.FC<FormInputs> = ({
     name: "",
     promotor: "",
     category_id: 0,
-    date: "",
+    datetime: "",
     location: "",
     photo: "",
-    details: "",
+    description: "",
   });
-  const { name, promotor, category_id, date, location, photo, details } =
-    values;
+  const {
+    name,
+    promotor,
+    category_id,
+    datetime,
+    location,
+    photo,
+    description,
+  } = values;
 
   useEffect(() => {
     if (defaultValues) {
-      const { name, promotor, category_id, date, location, photo, details } =
-        defaultValues;
+      const {
+        name,
+        promotor,
+        category_id,
+        datetime,
+        location,
+        photo,
+        description,
+      } = defaultValues;
       setValues({
         name,
         promotor,
         category_id,
-        date,
+        datetime,
         location,
         photo,
-        details,
+        description,
       });
     }
   }, [
@@ -56,10 +69,10 @@ const FormInput: React.FC<FormInputs> = ({
     name,
     promotor,
     category_id,
-    date,
+    datetime,
     location,
     photo,
-    details,
+    description,
     defaultValues,
   ]);
 
@@ -110,13 +123,13 @@ const FormInput: React.FC<FormInputs> = ({
           <Form.Group className="mb-3 col">
             <Form.Label>Date</Form.Label>
             <Controller
-              name="date"
+              name="datetime"
               control={control}
               render={({ field }): any => (
                 <DatePicker
                   placeholderText="Select date"
                   className={`${styles.input} form-control`}
-                  onChange={(date) => field.onChange(date)}
+                  onChange={(datetime) => field.onChange(datetime)}
                   selected={field.value}
                 />
               )}
@@ -151,15 +164,15 @@ const FormInput: React.FC<FormInputs> = ({
             as="textarea"
             className={styles.input}
             placeholder="add description of event"
-            defaultValue={addType ? "" : details}
-            {...register("details", {
+            defaultValue={addType ? "" : description}
+            {...register("description", {
               required: true,
             })}
           />
         </Form.Group>
         <div className="py-2 d-flex flex-column justify-content-center gap-4 mt-4">
           <Button type="submit" variant="success">
-            {addType ? "Add" : "Update Events"}
+            {addType ? "Submit" : "Update Events"}
           </Button>
         </div>
       </Form>

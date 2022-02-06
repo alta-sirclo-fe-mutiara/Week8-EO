@@ -25,10 +25,10 @@ const EditEvent = () => {
     name: "lazy events",
     promotor: "lazy events",
     category_id: 1,
-    date: "2022-02-25 12:00:00",
+    datetime: "2022-02-25 12:00:00",
     location: "Jakarta",
     photo: "google.com",
-    details: "ini details",
+    description: "ini details",
   };
 
   const [isSucces, setIsSucces] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const EditEvent = () => {
   };
 
   const onSubmit: SubmitHandler<InputEvents> = async (data) => {
-    const date = moment(data.date).format("YYYY-MM-DD h:mm:ss");
+    const date = moment(data.datetime).format("YYYY-MM-DD h:mm:ss");
     console.log({
       ...data,
       id: 1,

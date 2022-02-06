@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Link from "next/link";
 import DropdownProfile from "../../UI/Dropdown/DropdownProfile";
-
+import { AuthContext } from "../../../context/AuthContext";
 type Props = {
   onClick: any;
 };
@@ -11,7 +11,8 @@ const colorNav = {
 };
 
 const NavBar: React.FC<Props> = ({ onClick }) => {
-  let isLogged = true;
+  const { state } = useContext(AuthContext);
+  const { isLogged } = state;
   const [navbar, setNavbar] = useState<string>("border-bottom");
 
   useEffect(() => {
@@ -51,14 +52,10 @@ const NavBar: React.FC<Props> = ({ onClick }) => {
           className="justify-content-end align-items-center"
           style={colorNav}
         >
-          <Nav.Link style={colorNav} href="/">
-            Events
-          </Nav.Link>
+          <Link href="/">Events</Link>
           {isLogged && (
             <>
-              <Nav.Link style={colorNav} href="add-event">
-                Add Events
-              </Nav.Link>
+              <Link href="/add-event">Add Events</Link>
               <div className="text-secondary">
                 <DropdownProfile />
               </div>
