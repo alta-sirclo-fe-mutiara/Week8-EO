@@ -93,7 +93,6 @@ const EditEvent = ({ eventEdit }: any) => {
   if (!isLogged) {
     return <NotFound />;
   }
-
   return (
     <Layout pageTitle="Edit Event">
       <ModalAlert

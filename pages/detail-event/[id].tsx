@@ -80,11 +80,13 @@ const DetailEvent: NextPage = ({ event, comments }: any) => {
           </div>
           <div className="d-flex flex-column gap-2">
             <h6>Attends ({peopleAttend})</h6>
-            <div className="row">
-              <div className="col-2 d-flex flex-row  ">
-                {dataParticipans.map((image: any, i: number) => (
-                  <Attend key={i} image={null} />
-                ))}
+            <div className="col-12 d-flex flex-wrap">
+              <div className="row img-attend d-flex flex-wrap">
+                <div className="col-2 d-flex flex-row">
+                  {dataParticipans.map((image: any, i: number) => (
+                    <Attend key={i} image={null} />
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -150,7 +152,6 @@ export const getServerSideProps: GetServerSideProps = async ({
     query: QUERY_GET_BY_ID,
     variables: { id: params.id },
   });
-
   const { data: dataComment } = await client.query({
     query: QUERY_GET_COMMENTS,
     variables: { eventId: params.id },
