@@ -6,23 +6,43 @@ import Layout from "../components/Layout/Layout";
 import { ButtonCategory } from "../components/UI/Button/ButtonCategory";
 import styles from "../styles/homepage.module.css";
 import client from "../utils/apollo-client";
-import { QUERY_ALL_EVENTS, QUERY_GET_CATEGORY } from "../utils/queries";
+import {
+  QUERY_ALL_EVENTS,
+  QUERY_ALL_EVENTS_LIMIT,
+  QUERY_GET_CATEGORY,
+} from "../utils/queries";
 import { EventData } from "../types/type";
 import SearchFilter from "../components/Search/SearchFilter";
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 
 const Home: NextPage = ({ events, category }: any) => {
   const [eventData, setEventData] = useState([]);
-
+  const [summaryEvent, setSummeryEvent] = useState(0);
+  const [getEventByOffset] = useLazyQuery(QUERY_ALL_EVENTS_LIMIT);
+  const { data } = useQuery(QUERY_ALL_EVENTS);
   useEffect(() => {
     setEventData(events);
-  }, [setEventData, events]);
-
-  const { data } = useQuery(QUERY_ALL_EVENTS);
+    if (data) {
+      setSummeryEvent(data.events.length);
+    }
+  }, [setEventData, events, setSummeryEvent, data]);
 
   const handleAllEvents = () => {
-    setEventData(data.events);
+    setEventData(events);
   };
+
+  const handlePagination = (id: number) => {
+    getEventByOffset({
+      variables: { offset: id * 12 },
+    })
+      .then((data) => setEventData(data.data.events))
+      .catch(() => alert("error"));
+  };
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(summaryEvent / 8); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <div
@@ -56,7 +76,11 @@ const Home: NextPage = ({ events, category }: any) => {
                     All
                   </button>
                   {category.map((category: any) => (
-                    <ButtonCategory key={category.id}>
+                    <ButtonCategory
+                      key={category.id}
+                      id={category.id}
+                      setEventData={setEventData}
+                    >
                       {category.category}
                     </ButtonCategory>
                   ))}
@@ -81,6 +105,22 @@ const Home: NextPage = ({ events, category }: any) => {
                 ))}
               </div>
             </div>
+            <nav>
+              <ul className="pagination pagination-lg">
+                {pageNumbers.map((event: number, i: number) => (
+                  <li
+                    className="page-link"
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    key={i}
+                    onClick={() => handlePagination(i)}
+                  >
+                    {event}
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </section>
         </main>
       </Layout>
@@ -92,7 +132,8 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await client.query({
-    query: QUERY_ALL_EVENTS,
+    query: QUERY_ALL_EVENTS_LIMIT,
+    variables: { offset: 0 },
   });
 
   const { data: dataCategory } = await client.query({

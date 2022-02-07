@@ -30,10 +30,21 @@ export const QUERY_USER_BY_ID = gql`
     }
   }
 `;
-
 export const QUERY_ALL_EVENTS = gql`
   query {
     events {
+      id
+      name
+      promotor
+      categoryId
+      datetime
+      photo
+    }
+  }
+`;
+export const QUERY_ALL_EVENTS_LIMIT = gql`
+  query ($offset: Int!) {
+    events(limit: 12, offset: $offset) {
       id
       name
       promotor
@@ -63,8 +74,8 @@ export const QUERY_SEARCH_EVENT = gql`
 `;
 
 export const QUERY_GET_EVENT_BY_CATEGORY = gql`
-  query {
-    events(categoryId: 1, limit: 10, offset: 0) {
+  query ($categoryid: Int!) {
+    events(categoryid: $categoryid, limit: 10, offset: 0) {
       id
       name
       userId
@@ -241,6 +252,8 @@ export const MUTATION_CREATE_COMMENT = gql`
       userId
       eventId
       comment
+      name
+      avatar
     }
   }
 `;

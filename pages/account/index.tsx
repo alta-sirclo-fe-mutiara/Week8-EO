@@ -30,11 +30,12 @@ const Account: React.FC<Props> = () => {
   const { isLogged, token } = state;
   const [isProfile, setIsProfile] = useState({
     name: "",
+    email: "",
     avatar: "",
     phoneNumber: "",
   });
   const tokenId = tokenLocal("users");
-  const { name, avatar, phoneNumber } = isProfile;
+  const { name, email, avatar, phoneNumber } = isProfile;
   useEffect(() => {
     if (token) {
       getListEvent({
@@ -113,8 +114,8 @@ const Account: React.FC<Props> = () => {
               </div>
               <div className="col-lg-3 flex-column">
                 <div className="profile-item text-center text-lg-start">
-                  <h5 className="mb-0 fw-bolder">Username</h5>
-                  <p>{name}</p>
+                  <h5 className="mb-0 fw-bolder">{name}</h5>
+                  <p>{email}</p>
                 </div>
               </div>
               <div className="col-lg-3">

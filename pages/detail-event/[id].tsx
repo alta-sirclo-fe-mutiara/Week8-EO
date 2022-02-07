@@ -84,7 +84,7 @@ const DetailEvent: NextPage = ({ event, comments }: any) => {
               <div className="row img-attend d-flex flex-wrap">
                 <div className="col-2 d-flex flex-row">
                   {dataParticipans.map((image: any, i: number) => (
-                    <Attend key={i} image={null} />
+                    <Attend key={i} image={image} />
                   ))}
                 </div>
               </div>

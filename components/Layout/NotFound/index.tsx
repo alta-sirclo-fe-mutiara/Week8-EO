@@ -13,13 +13,7 @@ function NotFound() {
           <div className="text-center row shadow rounded-3 pt-3 mt-5 pb-5">
             <div className="col-5 mt-5">
               {/* Break dynamic route */}
-              {/* <Image
-                src="/image/1.png"
-                alt="not-found image"
-                layout="responsive"
-                width={70}
-                height={70}
-              /> */}
+              <img src="/image/1.png" alt="not-found image" />
             </div>
             <div className="col-7">
               <h1 className="mt-3">Ooops . . . </h1>

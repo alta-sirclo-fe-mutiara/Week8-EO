@@ -1,7 +1,11 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import styles from "../../../styles/detail.module.css";
-import { MUTATION_CREATE_COMMENT } from "../../../utils/queries";
+import { tokenLocal } from "../../../utils/formatDate";
+import {
+  MUTATION_CREATE_COMMENT,
+  QUERY_USER_BY_ID,
+} from "../../../utils/queries";
 
 type CommentProps = {
   token: string;
@@ -15,13 +19,23 @@ const CommentBar: React.FC<CommentProps> = ({
   setIsComment,
   isComment,
 }) => {
+  const tokenId = tokenLocal("users");
   const [textSearch, setTextSeach] = useState<string>("");
   const [createComment] = useMutation(MUTATION_CREATE_COMMENT);
+  const { loading, data } = useQuery(QUERY_USER_BY_ID, {
+    variables: { id: tokenId },
+    context: {
+      headers: {
+        Authorization: `Bearer ` + token,
+      },
+    },
+  });
+
   const handleChange = (e: any) => {
     setTextSeach(e.target.value);
   };
   const handleCommentBar = () => {
-    setTextSeach("");
+    setTextSeach(".............");
     createComment({
       variables: {
         eventId,
@@ -33,15 +47,21 @@ const CommentBar: React.FC<CommentProps> = ({
         },
       },
     }).then((data) => {
-      // console.log(data.data.createComment);
       setIsComment([...isComment, data.data.createComment]);
     });
   };
+
+  if (loading) {
+    return <p>Loading....</p>;
+  }
+
+  const thumbImage = data.usersByID.avatar || null;
+
   return (
     <div className="d-flex flex-row gap-4">
       <div className="col-1">
         <img
-          src="https://www.markuptag.com/images/image-six.jpg"
+          src={thumbImage ? thumbImage : "/image/image-default.webp"}
           alt="Picture of our Logo"
           className={`${styles.img}  rounded-circle`}
         />
