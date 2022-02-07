@@ -5,7 +5,7 @@ type CommentProps = {
 };
 const CommentList: React.FC<CommentProps> = ({ comments }) => {
   const { comment, name, avatar } = comments;
-  console.log(comment);
+  console.log(comments);
   return (
     <div className="d-flex flex-row gap-5">
       <div className="col-sm-1">

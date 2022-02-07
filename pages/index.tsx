@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
 import CardEvent from "../components/Card/CardEvent";
 import Layout from "../components/Layout/Layout";
@@ -8,6 +9,7 @@ import client from "../utils/apollo-client";
 import { QUERY_ALL_EVENTS, QUERY_GET_CATEGORY } from "../utils/queries";
 import { EventData } from "../types/type";
 import SearchFilter from "../components/Search/SearchFilter";
+import { useQuery } from "@apollo/client";
 
 const Home: NextPage = ({ events, category }: any) => {
   const [eventData, setEventData] = useState([]);
@@ -15,6 +17,12 @@ const Home: NextPage = ({ events, category }: any) => {
   useEffect(() => {
     setEventData(events);
   }, [setEventData, events]);
+
+  const { data } = useQuery(QUERY_ALL_EVENTS);
+
+  const handleAllEvents = () => {
+    setEventData(data.events);
+  };
 
   return (
     <div
@@ -41,13 +49,17 @@ const Home: NextPage = ({ events, category }: any) => {
               </div>
               <div className="container mt-5">
                 <div className={`row mx-auto ${styles.category}`}>
-                  {/* Looping Category Button and logic get category */}
-                  <ButtonCategory>All</ButtonCategory>
-                  <ButtonCategory>Art</ButtonCategory>
-                  <ButtonCategory>Sport</ButtonCategory>
-                  <ButtonCategory>Tech</ButtonCategory>
-                  <ButtonCategory>Edu</ButtonCategory>
-                  <ButtonCategory>Music</ButtonCategory>
+                  <button
+                    className="btn btn-none col-4 col-lg-2"
+                    onClick={handleAllEvents}
+                  >
+                    All
+                  </button>
+                  {category.map((category: any) => (
+                    <ButtonCategory key={category.id}>
+                      {category.category}
+                    </ButtonCategory>
+                  ))}
                 </div>
               </div>
             </div>
@@ -78,7 +90,7 @@ const Home: NextPage = ({ events, category }: any) => {
 
 export default Home;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await client.query({
     query: QUERY_ALL_EVENTS,
   });

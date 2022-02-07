@@ -33,6 +33,7 @@ const CommentBar: React.FC<CommentProps> = ({
         },
       },
     }).then((data) => {
+      // console.log(data.data.createComment);
       setIsComment([...isComment, data.data.createComment]);
     });
   };

@@ -129,6 +129,9 @@ const ModalEditProfile: React.FC<Props> = ({
             <Form.Control
               type="password"
               placeholder="Enter password"
+              style={{
+                backgroundColor: "#F3F3F3",
+              }}
               {...register("password", {
                 required: true,
               })}

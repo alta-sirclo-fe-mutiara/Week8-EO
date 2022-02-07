@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import AuthReducer from "./AuthReducer";
+import AuthReducer, { AuthActionKind } from "./AuthReducer";
 
 type User = {
   name: string;
@@ -36,7 +36,7 @@ export const AuthContextProvide = ({ children }: any) => {
       const users = localStorage.getItem("users") || "{}";
       const user = JSON.parse(users);
       if (user.token) {
-        dispatch({ type: "LOGIN_SUCCESS", payload: user });
+        dispatch({ type: AuthActionKind.LOGIN_SUCCESS, payload: user });
       }
     }
   }, [isServer]);

@@ -1,4 +1,4 @@
-enum AuthActionKind {
+export enum AuthActionKind {
   LOGIN_SUCCESS = "LOGIN_SUCCESS",
   LOGOUT_SUCCESS = "LOGOUT_SUCCESS",
 }

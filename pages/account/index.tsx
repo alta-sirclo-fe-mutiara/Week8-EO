@@ -6,10 +6,15 @@ import { FaUserAlt } from "react-icons/fa";
 import { RiEdit2Fill, RiDeleteBin5Line } from "react-icons/ri";
 import ModalEditProfile from "../../components/Modal/ModalEditProfile";
 import { useLazyQuery } from "@apollo/client";
-import { QUERY_GET_USER_LIST_EVENT } from "../../utils/queries";
+import {
+  QUERY_GET_USER_LIST_EVENT,
+  QUERY_USER_BY_ID,
+} from "../../utils/queries";
 import { AuthContext } from "../../context/AuthContext";
 import { tokenLocal } from "../../utils/formatDate";
 import { InputEvents } from "../../types/type";
+import NotFound from "../../components/Layout/NotFound/index";
+import ModalDelete from "../../components/Modal/ModalDelete";
 
 type Props = {
   onClick: any;
@@ -19,36 +24,57 @@ const Account: React.FC<Props> = () => {
   const [showModalProfile, setShowModalProfile] = useState(false);
   const [eventList, setEventList] = useState<InputEvents | any>([]);
   const [getListEvent] = useLazyQuery(QUERY_GET_USER_LIST_EVENT);
+  const [getUserProfile] = useLazyQuery(QUERY_USER_BY_ID);
   const { state } = useContext(AuthContext);
-  const { isLogged, token, user } = state;
+  const [show, setShow] = useState(false);
+  const { isLogged, token } = state;
   const [isProfile, setIsProfile] = useState({
-    name: user?.name,
-    email: user?.email,
-    avatar: null,
+    name: "",
+    avatar: "",
     phoneNumber: "",
   });
-
-  const { name, avatar, phoneNumber } = isProfile;
-
   const tokenId = tokenLocal("users");
-
+  const { name, avatar, phoneNumber } = isProfile;
   useEffect(() => {
-    getListEvent({
-      variables: { userId: tokenId },
-      context: {
-        headers: {
-          Authorization: `Bearer ` + token,
+    if (token) {
+      getListEvent({
+        variables: { userId: tokenId },
+        context: {
+          headers: {
+            Authorization: `Bearer ` + token,
+          },
         },
-      },
-    })
-      .then((data) => {
-        setEventList(data.data.events);
       })
-      .catch(() => {
-        console.log("error");
-      });
-  }, [getListEvent, token, tokenId]);
+        .then((data) => {
+          setEventList(data.data.events);
+        })
+        .catch(() => {
+          alert("something wrong...");
+        });
 
+      getUserProfile({
+        variables: { id: tokenId },
+        context: {
+          headers: {
+            Authorization: `Bearer ` + token,
+          },
+        },
+      })
+        .then((data) => {
+          setIsProfile(data.data.usersByID);
+        })
+        .catch(() => {
+          alert("something wrong...");
+        });
+    }
+  }, [getUserProfile, getListEvent, token, tokenId]);
+
+  const handleClose = () => {
+    setShow(false);
+  };
+  if (!isLogged) {
+    return <NotFound />;
+  }
   return (
     <>
       <Layout pageTitle="Profile">
@@ -59,6 +85,15 @@ const Account: React.FC<Props> = () => {
           onSetProf={setShowModalProfile}
           setIsProfile={setIsProfile}
         />
+        <ModalDelete
+          id={tokenId || 0}
+          handleClose={handleClose}
+          show={show}
+          eventList={null}
+          setEventList={null}
+          isUser={true}
+        />
+
         <div className="flex-column ">
           <div className="col-12 justify-content-center card shadow border-0 px-0 my-4">
             <img
@@ -97,7 +132,11 @@ const Account: React.FC<Props> = () => {
                   >
                     <RiEdit2Fill />
                   </div>
-                  <div className="col-2 text-center text-lg-end">
+                  <div
+                    className="col-2 text-center text-lg-end"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setShow(true)}
+                  >
                     <RiDeleteBin5Line />
                   </div>
                 </div>
@@ -111,7 +150,12 @@ const Account: React.FC<Props> = () => {
             <div className="list-event mt-4">
               <div className="row item-list">
                 {eventList.map((event: InputEvents, i: number) => (
-                  <CardMyEvent key={i} event={event} />
+                  <CardMyEvent
+                    key={i}
+                    event={event}
+                    eventList={eventList}
+                    setEventList={setEventList}
+                  />
                 ))}
               </div>
             </div>

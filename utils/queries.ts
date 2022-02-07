@@ -19,6 +19,18 @@ export const QUERY_USER = gql`
   }
 `;
 
+export const QUERY_USER_BY_ID = gql`
+  query ($id: Int!) {
+    usersByID(id: $id) {
+      name
+      email
+      password
+      phoneNumber
+      avatar
+    }
+  }
+`;
+
 export const QUERY_ALL_EVENTS = gql`
   query {
     events {
@@ -35,6 +47,24 @@ export const QUERY_ALL_EVENTS = gql`
 export const QUERY_SEARCH_EVENT = gql`
   query ($keyword: String!) {
     events(keyword: $keyword, limit: 10, offset: 0) {
+      id
+      name
+      userId
+      userName
+      promotor
+      categoryId
+      categoryName
+      datetime
+      location
+      description
+      photo
+    }
+  }
+`;
+
+export const QUERY_GET_EVENT_BY_CATEGORY = gql`
+  query {
+    events(categoryId: 1, limit: 10, offset: 0) {
       id
       name
       userId
@@ -93,10 +123,10 @@ export const QUERY_GET_COMMENTS = gql`
     readComment(eventid: $eventId) {
       id
       userId
-      name
-      avatar
       eventId
       comment
+      name
+      avatar
     }
   }
 `;
@@ -211,6 +241,22 @@ export const MUTATION_CREATE_COMMENT = gql`
       userId
       eventId
       comment
+    }
+  }
+`;
+
+export const MUTATION_DELETE_EVENT = gql`
+  mutation ($id: Int!) {
+    deleteEvent(id: $id) {
+      message
+    }
+  }
+`;
+
+export const MUTATION_DELETE_USER = gql`
+  mutation ($id: Int!) {
+    deleteUser(id: $id) {
+      message
     }
   }
 `;

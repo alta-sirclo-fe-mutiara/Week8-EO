@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout/Layout";
 import styles from "../../styles/detail.module.css";
 import CommentList from "../../components/UI/Comment/CommentList";
@@ -142,7 +143,9 @@ const DetailEvent: NextPage = ({ event, comments }: any) => {
 
 export default DetailEvent;
 
-export const getServerSideProps = async ({ params }: any) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+}: any) => {
   const { data } = await client.query({
     query: QUERY_GET_BY_ID,
     variables: { id: params.id },

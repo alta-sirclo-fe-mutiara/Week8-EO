@@ -14,8 +14,6 @@ import NotFound from "../../components/Layout/NotFound";
 const AddEvent = () => {
   const { state } = useContext(AuthContext);
   const { token, isLogged } = state;
-  console.log(token);
-
   const [createEvent] = useMutation(MUTATION_CREATE_EVENT);
   const {
     register,
