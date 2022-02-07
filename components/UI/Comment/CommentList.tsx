@@ -1,7 +1,7 @@
 import styles from "../../../styles/detail.module.css";
 
 type CommentProps = {
-  comment: any;
+  comments: any;
 };
 const CommentList: React.FC<CommentProps> = ({ comments }) => {
   const { comment, name, avatar } = comments;
