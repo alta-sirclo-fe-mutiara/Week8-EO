@@ -9,11 +9,13 @@ import FormInput from "../../components/Form/FormInput";
 import ModalAlert from "../../components/Modal/ModalAlert";
 import { MUTATION_CREATE_EVENT } from "../../utils/queries";
 import { AuthContext } from "../../context/AuthContext";
+import NotFound from "../../components/Layout/NotFound";
+
 const AddEvent = () => {
 	const { state } = useContext(AuthContext);
 	const { token, isLogged } = state;
-	console.log(token);
-	const [createEvent, { error }] = useMutation(MUTATION_CREATE_EVENT);
+
+	const [createEvent] = useMutation(MUTATION_CREATE_EVENT);
 	const {
 		register,
 		handleSubmit,
@@ -31,22 +33,15 @@ const AddEvent = () => {
 	};
 
 	const onSubmit: SubmitHandler<InputEvents> = async (data) => {
-		const {
-			name,
-			promotor,
-			category_id,
-			datetime,
-			location,
-			description,
-			photo,
-		} = data;
+		const { name, promotor, categoryId, datetime, location, description, photo } =
+			data;
 
 		const date = moment(datetime).format("YYYY-MM-DD h:mm:ss");
 		let addEvent = {
 			name: name,
 			userId: 12,
 			promotor: promotor,
-			categoryId: +category_id,
+			categoryId: +categoryId,
 			datetime: date,
 			location: location,
 			description: description,
@@ -61,28 +56,28 @@ const AddEvent = () => {
 						Authorization: `Bearer ` + token,
 					},
 				},
-			}).then((data) => {
-				if (data.data) {
-					setShow({
-						success: true,
-						failed: false,
-						isSucces: true,
-					});
-				}
-
-				if (error) {
+			})
+				.then((data) => {
+					if (data.data) {
+						setShow({
+							success: true,
+							failed: false,
+							isSucces: true,
+						});
+					}
+				})
+				.catch(() => {
 					setShow({
 						success: false,
 						failed: true,
 						isSucces: false,
 					});
-				}
-			});
+				});
 		}
 	};
 
 	if (!isLogged) {
-		return <p>Page not found!</p>;
+		return <NotFound />;
 	}
 
 	return (

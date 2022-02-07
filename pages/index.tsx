@@ -5,11 +5,11 @@ import Layout from "../components/Layout/Layout";
 import { ButtonCategory } from "../components/UI/Button/ButtonCategory";
 import styles from "../styles/homepage.module.css";
 import client from "../utils/apollo-client";
-import { QUERY_ALL_EVENTS } from "../utils/queries";
+import { QUERY_ALL_EVENTS, QUERY_GET_CATEGORY } from "../utils/queries";
 import { EventData } from "../types/type";
 import SearchFilter from "../components/Search/SearchFilter";
 
-const Home: NextPage = ({ events }: any) => {
+const Home: NextPage = ({ events, category }: any) => {
   const [eventData, setEventData] = useState([]);
 
   useEffect(() => {
@@ -83,9 +83,13 @@ export const getServerSideProps = async () => {
     query: QUERY_ALL_EVENTS,
   });
 
+  const { data: dataCategory } = await client.query({
+    query: QUERY_GET_CATEGORY,
+  });
   return {
     props: {
       events: data.events,
+      category: dataCategory.categories,
     },
   };
 };
