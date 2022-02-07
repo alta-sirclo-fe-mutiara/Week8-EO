@@ -35,6 +35,7 @@ Access our site at http://lazyevent.surge.sh/
 - TypeScript
 - Bootstrap v5
 - React Bootstrap
+- React Hooks Form
 - React Icons
 - React Datepicker
 - CSS
