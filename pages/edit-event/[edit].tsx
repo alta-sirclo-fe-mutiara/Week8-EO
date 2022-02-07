@@ -58,7 +58,6 @@ const EditEvent = ({ eventEdit }: any) => {
 
   const onSubmit: SubmitHandler<InputEvents> = (data) => {
     const date = moment(data.datetime).format("YYYY-MM-DD h:mm:ss");
-
     updateEvent({
       variables: {
         id: id,

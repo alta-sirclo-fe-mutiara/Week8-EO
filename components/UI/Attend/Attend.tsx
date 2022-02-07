@@ -6,7 +6,7 @@ type Props = {
 const Attend: React.FC<Props> = ({ image }) => {
   return (
     <img
-      src={image ? image : "https://www.markuptag.com/images/image-six.jpg"}
+      src={image ? image : "/image/image-default.webp"}
       alt="Picture of our Logo"
       className={`${styles["img-attend"]} rounded-circle`}
     />

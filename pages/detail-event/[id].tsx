@@ -132,7 +132,7 @@ const DetailEvent: NextPage = ({ event, comments }: any) => {
             />
           )}
           {isComment.map((comments: any, i: number) => (
-            <CommentList key={i} comment={comments} />
+            <CommentList key={i} comments={comments} />
           ))}
         </div>
       </div>

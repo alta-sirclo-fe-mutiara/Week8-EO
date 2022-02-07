@@ -34,7 +34,6 @@ const ModalRegister: React.FC<Props> = ({ showReg, onSetLog, onSetReg }) => {
         password: data.password,
       },
     }).then(() => {
-      console.log(a);
       setIsSucces(true);
       setTimeout(() => {
         setIsSucces(false);

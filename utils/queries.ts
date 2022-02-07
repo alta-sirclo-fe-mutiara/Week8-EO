@@ -93,8 +93,22 @@ export const QUERY_GET_COMMENTS = gql`
     readComment(eventid: $eventId) {
       id
       userId
+      name
+      avatar
       eventId
       comment
+    }
+  }
+`;
+
+export const QUERY_GET_USER_LIST_EVENT = gql`
+  query ($userId: Int!) {
+    events(userid: $userId, limit: 10, offset: 0) {
+      id
+      name
+      promotor
+      datetime
+      photo
     }
   }
 `;
@@ -151,6 +165,33 @@ export const MUTATION_UPDATE_EVENT = gql`
       }
     ) {
       name
+    }
+  }
+`;
+
+export const MUTATION_UPDATE_USER = gql`
+  mutation (
+    $id: Int!
+    $name: String!
+    $email: String!
+    $password: String!
+    $phoneNumber: String!
+    $avatar: String!
+  ) {
+    updateUser(
+      id: $id
+      set: {
+        name: $name
+        email: $email
+        password: $password
+        phoneNumber: $phoneNumber
+        avatar: $avatar
+      }
+    ) {
+      name
+      email
+      phoneNumber
+      avatar
     }
   }
 `;

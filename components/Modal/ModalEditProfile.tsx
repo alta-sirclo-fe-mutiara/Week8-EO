@@ -1,41 +1,74 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { MUTATION_UPDATE_USER } from "../../utils/queries";
 import InputForm from "../UI/Input/InputForm";
 
 type Props = {
   id: number;
   showProf: boolean;
+  setIsProfile: (arg: any) => void;
   onSetProf: (arg: boolean) => void;
+  token: string;
 };
 
 type Inputs = {
   name: string;
   email: string;
-  phone: string;
-  address: string;
-  password?: string;
-  id?: number;
+  phoneNumber: string;
+  avatar: string;
+  password: string;
+  id: number;
 };
 
-const ModalEditProfile: React.FC<Props> = ({ showProf, onSetProf, id }) => {
+const ModalEditProfile: React.FC<Props> = ({
+  showProf,
+  onSetProf,
+  setIsProfile,
+  id,
+  token,
+}) => {
   const [isSucces, setIsSucces] = useState<boolean>(false);
   const [isFailed, setIsFailed] = useState<boolean>(false);
-
+  const [updateUser] = useMutation(MUTATION_UPDATE_USER);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit = async (data: any) => {
-    console.log({ ...data, id });
-    // Send data to back end with graphql
-    setIsSucces(true);
-    setTimeout(() => {
-      setIsSucces(false);
-      setIsFailed(true);
-    }, 1000);
+  const onSubmit = (data: any) => {
+    const { name, email, phoneNumber, avatar, password } = data;
+    updateUser({
+      variables: {
+        id: id,
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        avatar: avatar,
+        password: password,
+      },
+      context: {
+        headers: {
+          Authorization: `Bearer ` + token,
+        },
+      },
+    })
+      .then((data) => {
+        setIsProfile(data.data.updateUser);
+        setIsSucces(true);
+        setTimeout(() => {
+          onSetProf(false);
+          setIsSucces(false);
+        }, 1000);
+      })
+      .catch(() => {
+        setIsFailed(true);
+        setTimeout(() => {
+          setIsFailed(false);
+        }, 1000);
+      });
   };
 
   return (
@@ -67,6 +100,18 @@ const ModalEditProfile: React.FC<Props> = ({ showProf, onSetProf, id }) => {
               })}
             />
           </Form.Group>
+          <Form.Group className="mb-3">
+            <InputForm
+              className="mb-3 col"
+              label="Avatar"
+              placeholder="Change Avatar"
+              defaultValue={""}
+              errors={errors.avatar}
+              {...register("avatar", {
+                required: true,
+              })}
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <InputForm
               className="mb-3 col"
@@ -80,16 +125,17 @@ const ModalEditProfile: React.FC<Props> = ({ showProf, onSetProf, id }) => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <InputForm
-              className="mb-3 col"
-              label="password"
-              placeholder="Change password"
-              defaultValue={""}
-              errors={errors.password}
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter password"
               {...register("password", {
                 required: true,
               })}
             />
+            {errors.password && (
+              <span className="text-danger">This field is required</span>
+            )}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <InputForm
@@ -97,8 +143,8 @@ const ModalEditProfile: React.FC<Props> = ({ showProf, onSetProf, id }) => {
               label="Phone"
               placeholder="Add phone number"
               defaultValue={""}
-              errors={errors.phone}
-              {...register("phone", {
+              errors={errors.phoneNumber}
+              {...register("phoneNumber", {
                 required: true,
               })}
             />
