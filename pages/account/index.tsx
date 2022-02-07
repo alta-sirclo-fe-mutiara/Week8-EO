@@ -1,4 +1,10 @@
-import { useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+// import client from "../../utils/apollo-client";
+import { useLazyQuery } from "@apollo/client";
+import { AuthContext } from "../../context/AuthContext";
+import { QUERY_USER_BY_ID } from "../../utils/queries";
+
+import { tokenLocal } from "../../utils/formatDate";
 import Layout from "../../components/Layout/Layout";
 import CardMyEvent from "../../components/Card/CardMyEvent";
 import styles from "../../styles/account.module.css";
@@ -12,14 +18,47 @@ type Props = {
 
 const Account: React.FC<Props> = () => {
 	const [showModalProfile, setShowModalProfile] = useState(false);
-	// const { state, dispatch } = useContext(AuthContext);
-	// const { token, isLoged } = state;
-	// const [userEvent, setUserEvent] = useState();
-	// const [phone, setUserEvent] = useState();
+	const { state, dispatch } = useContext(AuthContext);
+	const { token, isLogged } = state;
+	const [userEvent, setUserEvent] = useState();
+	const [phone, setPhone] = useState();
+	const [getProfile, { data }] = useLazyQuery(QUERY_USER_BY_ID);
+	const [isProfile, setIsProfile] = useState();
 
-	// const event = async (data) => {
+	useEffect(() => {
+		const tokenId = tokenLocal("users");
+		// console.log(tokenId);
+		getProfile({
+			variables: { id: tokenId },
+			context: {
+				headers: {
+					Authorization: `Bearer ` + token,
+				},
+			},
+		});
+		if (data) {
+			console.log(data);
+			setIsProfile(data.usersByID);
+		}
+	}, []);
+
+	// console.log(isProfile);
+
+	// const { data } = useQuery(QUERY_USER_BY_ID, { variables: { id } });
+
+	// const { data } = useQuery(QUERY_USER_BY_ID, {
+	// 	variables: {
+	// 		userid: id,
+	// 	},context: {
+	// 				headers: {
+	// 					Authorization: `Bearer ` + token,
+	// 				},
+	// 			},
+	// });
+
+	// const event = async (data: any) => {
 	// 	try {
-	// 		await getEvent(data, setUserQoutes);
+	// 		await getEvent(data, setUserEvent);
 	// 	} catch (err) {
 	// 		console.log(err);
 	// 	}
@@ -30,9 +69,9 @@ const Account: React.FC<Props> = () => {
 	// 	event(data);
 	// }, [setUserEvent]);
 
-	// if (!isLoged) {
-	// 	return <>Page nont fond dipanggil</>;
-	// }
+	if (!isLogged) {
+		return <>Page nont fond dipanggil</>;
+	}
 
 	return (
 		<>
@@ -59,14 +98,14 @@ const Account: React.FC<Props> = () => {
 							</div>
 							<div className="col-lg-3 flex-column">
 								<div className="profile-item text-center text-lg-start">
-									<h5 className="mb-0 fw-bolder">Username</h5>
-									<p>TalalaLili</p>
+									<h5 className="mb-0 fw-bolder"> {isProfile.name} </h5>
+									<p> {isProfile.email} </p>
 								</div>
 							</div>
 							<div className="col-lg-3">
 								<div className="profile-item text-center text-lg-start">
 									<p className="mb-0">Phone Number </p>
-									<p>38 972 588-42-36</p>
+									<p>{isProfile.phoneNumber}</p>
 								</div>
 							</div>
 							<div className="col-lg-3">
