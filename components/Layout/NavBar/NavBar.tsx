@@ -52,11 +52,13 @@ const NavBar: React.FC<Props> = ({ onClick }) => {
 					style={colorNav}
 				>
 					<Link href="/">
-						<a className="me-lg-5">Events</a>
+						<a className="me-lg-4 my-lg-0 my-2">Events</a>
 					</Link>
 					{isLogged && (
 						<>
-							<Link href="/add-event">Add Events</Link>
+							<Link href="/add-event">
+								<a className="d-flex flex-column me-lg-4 my-lg-0 my-2">Add Events</a>
+							</Link>
 							<div className="text-secondary">
 								<DropdownProfile />
 							</div>

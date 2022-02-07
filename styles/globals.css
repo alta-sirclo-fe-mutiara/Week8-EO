@@ -13,6 +13,11 @@ a {
 	text-decoration: none;
 }
 
+a:hover {
+	font-weight: 550 !important;
+	color: #ff7158;
+}
+
 * {
 	box-sizing: border-box;
 }

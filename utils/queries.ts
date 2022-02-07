@@ -92,23 +92,23 @@ export const QUERY_GET_PARTICIPANTS = gql`
 `;
 
 export const QUERY_GET_CATEGORY = gql`
-  query {
-    categories {
-      id
-      category
-    }
-  }
+	query {
+		categories {
+			id
+			category
+		}
+	}
 `;
 
 export const QUERY_GET_COMMENTS = gql`
-  query ($eventId: Int!) {
-    readComment(eventid: $eventId) {
-      id
-      userId
-      eventId
-      comment
-    }
-  }
+	query ($eventId: Int!) {
+		readComment(eventid: $eventId) {
+			id
+			userId
+			eventId
+			comment
+		}
+	}
 `;
 export const MUTATION_CREATE_EVENT = gql`
 	mutation (
@@ -140,31 +140,31 @@ export const MUTATION_CREATE_EVENT = gql`
 `;
 
 export const MUTATION_UPDATE_EVENT = gql`
-  mutation (
-    $id: Int!
-    $name: String!
-    $promotor: String!
-    $categoryId: Int!
-    $datetime: String!
-    $location: String!
-    $description: String!
-    $photo: String!
-  ) {
-    updateEvent(
-      id: $id
-      set: {
-        name: $name
-        promotor: $promotor
-        categoryId: $categoryId
-        datetime: $datetime
-        location: $location
-        description: $description
-        photo: $photo
-      }
-    ) {
-      name
-    }
-  }
+	mutation (
+		$id: Int!
+		$name: String!
+		$promotor: String!
+		$categoryId: Int!
+		$datetime: String!
+		$location: String!
+		$description: String!
+		$photo: String!
+	) {
+		updateEvent(
+			id: $id
+			set: {
+				name: $name
+				promotor: $promotor
+				categoryId: $categoryId
+				datetime: $datetime
+				location: $location
+				description: $description
+				photo: $photo
+			}
+		) {
+			name
+		}
+	}
 `;
 
 export const MUTATION_JOIN_EVENT = gql`
@@ -176,12 +176,12 @@ export const MUTATION_JOIN_EVENT = gql`
 `;
 
 export const MUTATION_CREATE_COMMENT = gql`
-  mutation ($eventId: Int!, $comment: String!) {
-    createComment(eventid: $eventId, comment: $comment) {
-      id
-      userId
-      eventId
-      comment
-    }
-  }
+	mutation ($eventId: Int!, $comment: String!) {
+		createComment(eventid: $eventId, comment: $comment) {
+			id
+			userId
+			eventId
+			comment
+		}
+	}
 `;
