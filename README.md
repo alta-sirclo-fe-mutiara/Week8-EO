@@ -19,7 +19,7 @@ Access our site at http://lazyevent.surge.sh/
 - Add Comment Event
 - Handle Responsive
 
-- **Scope of Problem:**
+**Scope of Problem:**
 - Category: All, Art, Sport, Edu, and Music
 - User can add comment all event
 - Upload Photo by Url
