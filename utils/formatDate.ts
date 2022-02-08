@@ -54,4 +54,3 @@ const breakDate = (datetime: string) => {
 	return { dateEvents, ddEvents, mmEvents, timeEvent };
 };
 export { formatDate, breakDate, tokenLocal };
-// export { breakDate, tokenLocal };
