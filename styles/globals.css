@@ -49,6 +49,17 @@ p {
 	border-radius: 6px;
 }
 
+.img-event {
+	height: 25vh !important;
+	width: 100% !important;
+}
+
 .not-found {
 	height: 100vh;
+}
+
+.home {
+	font-weight: 550;
+	cursor: pointer;
+	color: #525252;
 }

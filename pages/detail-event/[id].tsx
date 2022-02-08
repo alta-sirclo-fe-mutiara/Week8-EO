@@ -62,85 +62,85 @@ const DetailEvent: NextPage = ({ event, comments }: any) => {
   };
 
   return (
-    <Layout pageTitle="Detail Event">
-      <div className="jumbotron row">
-        <div className="col-md-8">
-          <img
-            src={photo}
-            alt="Picture of our Logo"
-            className="rounded img-fluid w-100 mb-3"
-          />
-        </div>
-        <div className="col-xs-12 col-md-4 d-flex flex-column gap-4">
-          <div>
-            <h3 className="text">{ddEvents}</h3>
-            <h3 className="text">{mmEvents}</h3>
-            <h3 className="text-black">{name}</h3>
-            <h6 className="text-secondary">Hosted by {promotor}</h6>
-          </div>
-          <div className="d-flex flex-column gap-2">
-            <h6>Attends ({peopleAttend})</h6>
-            <div className="col-12 d-flex flex-wrap">
-              <div className="row img-attend d-flex flex-wrap">
-                <div className="col-2 d-flex flex-row">
-                  {dataParticipans.map((image: any, i: number) => (
-                    <Attend key={i} image={image} />
-                  ))}
-                </div>
-              </div>
-            </div>
+			<Layout pageTitle="Detail Event">
+				<div className="jumbotron row">
+					<div className="col-md-8">
+						<img
+							src={photo}
+							alt="Picture of our Logo"
+							className="rounded img-fluid w-100 mb-3"
+						/>
+					</div>
+					<div className="col-xs-12 col-md-4 d-flex flex-column gap-4">
+						<div>
+							<h3 className="text">{ddEvents}</h3>
+							<h3 className="text">{mmEvents}</h3>
+							<h3 className="text-black text-capitalize">{name}</h3>
+							<h6 className="text-secondary">Hosted by {promotor}</h6>
+						</div>
+						<div className="d-flex flex-column gap-2">
+							<h6>Attends ({peopleAttend})</h6>
+							<div className="col-12 d-flex flex-wrap">
+								<div className="row img-attend d-flex flex-wrap">
+									<div className="col-2 d-flex flex-row">
+										{dataParticipans.map((image: any, i: number) => (
+											<Attend key={i} image={image} />
+										))}
+									</div>
+								</div>
+							</div>
 
-            {isLogged && (
-              <button
-                className={`btn ${
-                  isJoin ? "btn-secondary" : "btn-green"
-                }  text-white w-100`}
-                onClick={handleJoinEvent}
-                disabled={isJoin}
-              >
-                Join
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="jumbotron">
-          <div className="row d-flex flex-column-reverse flex-md-row my-1">
-            <div className="col-md-8 my-3">
-              <h2>About</h2>
-              <p className={styles.palagraf}>{description}</p>
-            </div>
-            <div className="col-xs-12 col-md-4 my-3">
-              <div>
-                <h6 className="fw-bold">Date and time</h6>
-                <h6>{dateEvents}</h6>
-                <h6>{timeEvent}</h6>
-              </div>
-              <div>
-                <h6 className="fw-bold">Location</h6>
-                <h6>{location}</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="d-flex flex-column gap-4">
-        <div className="col-10 col-lg-8">
-          <h3 className="mb-4">Comments</h3>
-          {isLogged && (
-            <CommentBar
-              token={token}
-              eventId={id}
-              isComment={isComment}
-              setIsComment={setIsComment}
-            />
-          )}
-          {isComment.map((comments: any, i: number) => (
-            <CommentList key={i} comments={comments} />
-          ))}
-        </div>
-      </div>
-    </Layout>
-  );
+							{isLogged && (
+								<button
+									className={`btn ${
+										isJoin ? "btn-secondary" : "btn-green"
+									}  text-white w-100`}
+									onClick={handleJoinEvent}
+									disabled={isJoin}
+								>
+									Join
+								</button>
+							)}
+						</div>
+					</div>
+					<div className="jumbotron">
+						<div className="row d-flex flex-column-reverse flex-md-row my-1">
+							<div className="col-md-8 my-3">
+								<h2>About</h2>
+								<p className={styles.palagraf}>{description}</p>
+							</div>
+							<div className="col-xs-12 col-md-4 my-3">
+								<div>
+									<h6 className="fw-bold">Date and time</h6>
+									<h6>{dateEvents}</h6>
+									<h6>{timeEvent}</h6>
+								</div>
+								<div>
+									<h6 className="fw-bold">Location</h6>
+									<h6>{location}</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="d-flex flex-column gap-4">
+					<div className="col-10 col-lg-8">
+						<h3 className="mb-4">Comments</h3>
+						{isLogged && (
+							<CommentBar
+								token={token}
+								eventId={id}
+								isComment={isComment}
+								setIsComment={setIsComment}
+							/>
+						)}
+						{isComment.map((comments: any, i: number) => (
+							<CommentList key={i} comments={comments} />
+						))}
+					</div>
+				</div>
+			</Layout>
+		);
 };
 
 export default DetailEvent;

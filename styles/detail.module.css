@@ -27,8 +27,8 @@
 }
 
 .img-attend {
-	height: 50px;
-	width: 50px;
+	height: 50px !important;
+	width: 50px !important;
 }
 
 @media only screen and (max-width: 600px) {

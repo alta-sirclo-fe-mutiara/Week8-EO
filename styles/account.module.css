@@ -3,27 +3,28 @@
 	display: block;
 } */
 .background-profile {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: normal;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: normal;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .img {
-  height: 20vh;
+	height: 21vh;
+	width: 21vh;
 }
 
 @media only screen and (max-width: 600px) {
-  .background-profile {
-    display: none;
-  }
+	.background-profile {
+		display: none;
+	}
 }
