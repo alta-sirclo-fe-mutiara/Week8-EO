@@ -5,11 +5,12 @@ import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import { AuthActionKind } from "../../../context/AuthReducer";
 const DropdownProfile = () => {
   const { dispatch } = useContext(AuthContext);
   const router = useRouter();
   const logoutHandler = () => {
-    dispatch({ type: "LOGOUT_SUCCESS" });
+    dispatch({ type: AuthActionKind.LOGOUT_SUCCESS });
     localStorage.removeItem("users");
     router.push("/");
     router.replace("/");

@@ -26,7 +26,15 @@ const ModalAlert: React.FC<Props> = ({ handleClose, show, isSucces }) => {
           </div>
           {isSucces && (
             <Button variant="warning text-white py-2 px-4 mb-3 rounded-pill fw-bold">
-              <Link href="/">Explore</Link>
+              <Link href="/" passHref>
+                <span
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  Explore
+                </span>
+              </Link>
             </Button>
           )}
         </Modal.Body>
