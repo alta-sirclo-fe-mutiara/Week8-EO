@@ -17,6 +17,7 @@ Access our site at http://lazyevent.surge.sh/
 - Filter Event Category
 - Join Event
 - Add Comment Event
+- Handle Responsive
 
 - **Scope of Problem:**
 - Category: All, Art, Sport, Edu, and Music
