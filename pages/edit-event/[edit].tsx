@@ -16,7 +16,7 @@ const EditEvent = ({ eventEdit }: any) => {
   const [updateEvent] = useMutation(MUTATION_UPDATE_EVENT);
   const { state } = useContext(AuthContext);
   const { token, isLogged } = state;
-  console.log(isLogged);
+
   const {
     id,
     name,
