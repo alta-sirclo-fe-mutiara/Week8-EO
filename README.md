@@ -1,9 +1,13 @@
+
 # LazyEvent
+
+![Logo](https://cdn.freelogodesign.org/files/ed788af1c89a499a93bad78cb10923bf/thumb/logo_200x200.png?v=637798829360000000)
+
 
 About LazyEvent is an Event Planning App created for event planning management and the purpose of study in Sirclo Tech Academy.
 
 
-## Demo
+##  Demo
 
 Access our site at https://lazy-events.vercel.app/
 
@@ -26,7 +30,7 @@ Access our site at https://lazy-events.vercel.app/
 - Upload Photo by Url
 
 
-## Built With
+## 💻 Built With
 
 - Next.js
 - React.js
@@ -43,6 +47,12 @@ Access our site at https://lazy-events.vercel.app/
 - CSS
 
 **Prototype:** [Figma](https://www.figma.com/file/MR1tqgoorCMQBoMjTckH6y/Events?node-id=36%3A131)
+
+
+
+## 🎫 Screenshot App
+![App Screenshot](https://camo.githubusercontent.com/bb46cfa63223693846ec8994c1e24f785e89c9a91f62d4c4350377e6302a0d93/68747470733a2f2f7777772e617765736f6d6573637265656e73686f742e636f6d2f7765622f696d6167652f7468756d626e61696c2f32313738383738353f6b65793d34326262363666363738376335333761316163643366366231396635363361392673697a653d6f726967)
+
 
 ## 🚀 Getting Started
 
@@ -73,3 +83,4 @@ List of contributors:
 👨‍💻 [Lukman Nur Hakim](https://github.com/lukmannm)
 
 👩‍💻 [Mutiara A'yun](https://github.com/mayun19)
+
