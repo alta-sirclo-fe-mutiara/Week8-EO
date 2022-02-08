@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 function NotFound() {
@@ -12,7 +11,6 @@ function NotFound() {
 				<div className="col-11 col-md-8 col-lg-6 mt-5">
 					<div className="text-center row shadow rounded-3 pt-3 mt-5 pb-5">
 						<div className="col-4 mt-5">
-							{/* Break dynamic route */}
 							<img
 								src="/image/1.png"
 								className="w-100 img-fluid"
