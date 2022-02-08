@@ -21,6 +21,7 @@ Access our site at https://lazy-events.vercel.app/
 
 **Scope of Problem:**
 - Category: All, Art, Sport, Edu, and Music
+- Event Time based on selected event date and time event is set by default
 - User can add comment all event
 - Upload Photo by Url
 
