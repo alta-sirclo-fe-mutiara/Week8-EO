@@ -11,7 +11,7 @@ Access our site at https://lazy-events.vercel.app/
 ## Features
 
 - Register and Login User
-- Management Profile User and Delete User
+- Management Profile User
 - Add, Edit, and Delete Event 
 - List of Event
 - Filter Event Category
