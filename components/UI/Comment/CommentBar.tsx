@@ -50,12 +50,13 @@ const CommentBar: React.FC<CommentProps> = ({
       setIsComment([...isComment, data.data.createComment]);
     });
   };
-
+  let thumbImage = null;
+  if (data) {
+    thumbImage = data.usersByID.avatar;
+  }
   if (loading) {
     return <p>Loading....</p>;
   }
-
-  const thumbImage = data.usersByID.avatar || null;
 
   return (
     <div className="d-flex flex-row gap-4">
