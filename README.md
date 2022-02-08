@@ -5,7 +5,7 @@ About LazyEvent is an Event Planning App created for event planning management a
 
 ## Demo
 
-Access our site at http://localhost:3000/
+Access our site at https://lazy-events.vercel.app/
 
 
 ## Features
