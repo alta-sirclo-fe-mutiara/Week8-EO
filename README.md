@@ -18,6 +18,7 @@ Access our site at https://lazy-events.vercel.app/
 - Management Profile User
 - Add, Edit, and Delete Event 
 - List of Event
+- Search Event
 - Filter Event Category
 - Join Event
 - Add Comment Event
