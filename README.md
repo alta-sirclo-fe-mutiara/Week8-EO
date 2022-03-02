@@ -34,7 +34,6 @@ Access our site at https://lazy-events.vercel.app/
 ## 💻 Built With
 
 - Next.js
-- React.js
 - Moment.js
 - Apollo GraphQL
 - GraphQL
